@@ -238,3 +238,9 @@ connectDB();
 server.listen(config.port, () => {
     console.log(`Server is running on port ${config.port}`);
 });
+// ✅ Correct way
+import { createClient } from 'redis';
+
+const client = createClient({
+  url: process.env.REDIS_URL, // Yeh hona chahiye
+});
