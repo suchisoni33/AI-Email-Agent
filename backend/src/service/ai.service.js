@@ -101,7 +101,7 @@ You are currently acting on behalf of ${user.name}, with the email ${user.email}
 async function getResponse(messages, user) {
     try {
         const response = await ai.models.generateContent({
-            model: "gemini-2.5-flash-preview-04-17",
+            model: "gemini-1.5-flash",
             contents: messages,
             config: {
                 systemInstruction: getSystemInstruction(user),

@@ -179,6 +179,69 @@
 // export default redis;
 
 
+// import { Redis } from 'ioredis';
+// import dotenv from 'dotenv';
+
+// dotenv.config();
+
+// const redis = new Redis(process.env.REDIS_URL, {
+//   retryStrategy(times) {
+//     const delay = Math.min(times * 50, 2000);
+//     return delay;
+//   }
+// });
+
+// redis.on('connect', () => {
+//   console.log('✅ Redis connected');
+// });
+
+// redis.on('ready', () => {
+//   console.log('🚀 Redis is ready to use');
+// });
+
+// redis.on('error', (err) => {
+//   console.error('❌ Redis error:', err.message);
+// });
+
+// redis.on('close', () => {
+//   console.warn('⚠️ Redis connection closed');
+// });
+
+// redis.on('reconnecting', () => {
+//   console.log('🔁 Redis reconnecting...');
+// });
+// console.log("REDIS_URL:", process.env.REDIS_URL);
+
+
+// export const appendMessage = async (key, messageData) => {
+//   try {
+//     await redis.rpush(key, JSON.stringify(messageData));
+//   } catch (err) {
+//     console.error("❌ Error appending message:", err.message);
+//   }
+// };
+
+// export const getMessages = async (key) => {
+//   try {
+//     const messages = await redis.lrange(key, 0, -1);
+//     return messages.map((message) => {
+//       const tempMessage = JSON.parse(message);
+//       return {
+//         role: tempMessage.role,
+//         parts: [
+//           {
+//             text: tempMessage.content,
+//           },
+//         ],
+//       };
+//     });
+//   } catch (err) {
+//     console.error("❌ Error fetching messages:", err.message);
+//     return [];
+//   }
+// };
+
+// export default redis;
 import { Redis } from 'ioredis';
 import dotenv from 'dotenv';
 
@@ -210,17 +273,28 @@ redis.on('close', () => {
 redis.on('reconnecting', () => {
   console.log('🔁 Redis reconnecting...');
 });
+
 console.log("REDIS_URL:", process.env.REDIS_URL);
 
-
+// ✅ Store message in correct format for Gemini AI
 export const appendMessage = async (key, messageData) => {
   try {
-    await redis.rpush(key, JSON.stringify(messageData));
+    const redisMessage = {
+      role: messageData.role,
+      parts: [
+        {
+          text: messageData.content,
+        },
+      ],
+    };
+
+    await redis.rpush(key, JSON.stringify(redisMessage));
   } catch (err) {
     console.error("❌ Error appending message:", err.message);
   }
 };
 
+// ✅ Retrieve and format messages correctly
 export const getMessages = async (key) => {
   try {
     const messages = await redis.lrange(key, 0, -1);
@@ -228,9 +302,9 @@ export const getMessages = async (key) => {
       const tempMessage = JSON.parse(message);
       return {
         role: tempMessage.role,
-        parts: [
+        parts: tempMessage.parts || [
           {
-            text: tempMessage.content,
+            text: tempMessage.content, // backward compatible
           },
         ],
       };
