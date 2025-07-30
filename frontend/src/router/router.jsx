@@ -37,7 +37,7 @@
 //     )
 // }
 import { BrowserRouter as AppRouter, Routes, Route } from 'react-router-dom';
-import Auth from '../views/auth/Auth';  // ✅ Fix 1: Capitalized component and correct path
+import Auth from '../views/auth/auth';  // ✅ Fix 1: Capitalized component and correct path
 import Chat from '../views/chat/chat';  // ✅ Fix 2: Same here
 
 export const Router = () => {
