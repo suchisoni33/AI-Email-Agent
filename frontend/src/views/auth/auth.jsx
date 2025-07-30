@@ -47,28 +47,53 @@
 // }
 
 // export default auth;
-import React from 'react'
-import './auth.scss'
+// import React from 'react'
+// import './auth.scss'
 
-const auth = () => {
+// const auth = () => {
 
-    const handleGoogleSignIn = () => {
-        // Logic for Google Sign-In
-        window.location.href = 'http://localhost:3000/api/auth/google';
-    }
+//     const handleGoogleSignIn = () => {
+//         // Logic for Google Sign-In
+//         window.location.href = 'http://localhost:3000/api/auth/google';
+//     }
 
-    return (
-        <main className='auth-main' >
-            <section className="auth-section">
-                <button className="continue-with-google"
-                    onClick={handleGoogleSignIn}
-                >
-                    Continue with Google
-                </button>
-            </section>
-        </main>
-    )
-}
+//     return (
+//         <main className='auth-main' >
+//             <section className="auth-section">
+//                 <button className="continue-with-google"
+//                     onClick={handleGoogleSignIn}
+//                 >
+//                     Continue with Google
+//                 </button>
+//             </section>
+//         </main>
+//     )
+// }
 
-export default auth
+// export default auth
  
+import React from 'react';
+import './auth.scss';
+
+const Auth = () => {
+
+  const handleGoogleSignIn = () => {
+    // Logic for Google Sign-In
+    window.location.href = 'http://localhost:3000/api/auth/google';
+  };
+
+  return (
+    <main className="auth-main">
+      <section className="auth-section">
+        <button
+          className="continue-with-google"
+          onClick={handleGoogleSignIn}
+        >
+          Continue with Google
+        </button>
+      </section>
+    </main>
+  );
+};
+
+export default Auth;
